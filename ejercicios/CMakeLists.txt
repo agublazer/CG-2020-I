@@ -2,10 +2,10 @@
 cmake_minimum_required (VERSION 3.0)
 project (Tutorials)
 
-find_package(OpenGL REQUIRED)
+ find_package(OpenGL REQUIRED)
 
 
-if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
+ if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
     message( FATAL_ERROR "Please select another Build Directory ! (and give it a clever name, like bin_Visual2012_64bits/)" )
 endif()
 if( CMAKE_SOURCE_DIR MATCHES " " )
@@ -17,22 +17,22 @@ endif()
 
 
 
-# Compile external dependencies 
+ # Compile external dependencies 
 add_subdirectory (external)
 
-# On Visual 2005 and above, this module can set the debug working directory
+ # On Visual 2005 and above, this module can set the debug working directory
 cmake_policy(SET CMP0026 OLD)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/rpavlik-cmake-modules-fe2273")
 include(CreateLaunchers)
 include(MSVCMultipleProcessCompile) # /MP
 
-if(INCLUDE_DISTRIB)
+ if(INCLUDE_DISTRIB)
 	add_subdirectory(distrib)
 endif(INCLUDE_DISTRIB)
 
 
 
-include_directories(
+ include_directories(
 	external/AntTweakBar-1.16/include/
 	external/glfw-3.1.2/include/
 	external/glm-0.9.7.1/
@@ -42,13 +42,13 @@ include_directories(
 	.
 )
 
-set(ALL_LIBS
+ set(ALL_LIBS
 	${OPENGL_LIBRARY}
 	glfw
 	GLEW_1130
 )
 
-add_definitions(
+ add_definitions(
 	-DTW_STATIC
 	-DTW_NO_LIB_PRAGMA
 	-DTW_NO_DIRECT3D
@@ -56,13 +56,13 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
-# Tutorial 2
+ # Tutorial 2
 add_executable(ejercicio3 
 	ejercicio3/main.cpp
 	common/shader.cpp
 	common/shader.hpp
-	
-	ejercicio3/SimpleFragmentShader.fragmentshader
+
+ 	ejercicio3/SimpleFragmentShader.fragmentshader
 	ejercicio3/SimpleVertexShader.vertexshader
 )
 target_link_libraries(ejercicio3
@@ -75,21 +75,13 @@ create_default_target_launcher(ejercicio3 WORKING_DIRECTORY "${CMAKE_CURRENT_SOU
 SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
 
-
-if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
-
-add_custom_command(
-   TARGET ejercicio3 POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio3${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio3/"
-)
-
-# Tutorial 3
+ # Tutorial 2
 add_executable(ejercicio04 
-	ejercicio04/main.cpp
+	ejercicio04/ejercicio04.cpp
 	common/shader.cpp
 	common/shader.hpp
-	
-	ejercicio04/SimpleFragmentShader.fragmentshader
+
+ 	ejercicio04/SimpleFragmentShader.fragmentshader
 	ejercicio04/SimpleVertexShader.vertexshader
 )
 target_link_libraries(ejercicio04
@@ -103,15 +95,18 @@ SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
 
 
-if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
+ if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
 
+ add_custom_command(
+   TARGET ejercicio3 POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio3${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio3/"
+)
 add_custom_command(
    TARGET ejercicio04 POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio04${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio04/"
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio3${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio3/"
 )
 
 
-elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
+ elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
 
-endif (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
-
+ endif (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
