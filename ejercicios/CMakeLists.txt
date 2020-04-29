@@ -83,6 +83,33 @@ add_custom_command(
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio3${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio3/"
 )
 
+# Tutorial 3
+add_executable(ejercicio04 
+	ejercicio04/main.cpp
+	common/shader.cpp
+	common/shader.hpp
+	
+	ejercicio04/SimpleFragmentShader.fragmentshader
+	ejercicio04/SimpleVertexShader.vertexshader
+)
+target_link_libraries(ejercicio04
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(ejercicio04 PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio04/")
+create_target_launcher(ejercicio04 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio04/")
+create_default_target_launcher(ejercicio04 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio04/") # tut 1 is not the default or people would complain that tut 2 doesn't work
+SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
+SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
+
+
+if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
+
+add_custom_command(
+   TARGET ejercicio04 POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio04${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio04/"
+)
+
 
 elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
 
