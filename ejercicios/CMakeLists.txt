@@ -114,6 +114,22 @@ create_default_target_launcher(ejercicio05 WORKING_DIRECTORY "${CMAKE_CURRENT_SO
 SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
 
+ # Ejercicio04
+add_executable(control_practico 
+	control_practico/control_practico.cpp
+	common/shader.cpp
+	common/shader.hpp
+)
+target_link_libraries(control_practico
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(control_practico PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/control_practico/")
+create_target_launcher(control_practico WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/control_practico/")
+create_default_target_launcher(control_practico WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/control_practico/") # tut 1 is not the default or people would complain that tut 2 doesn't work
+SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
+SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
+
 
  if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
 
@@ -128,6 +144,10 @@ add_custom_command(
 add_custom_command(
    TARGET ejercicio05 POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/ejercicio05${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/ejercicio05/"
+)
+add_custom_command(
+   TARGET control_practico POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/control_practico${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/control_practico/"
 )
 
 
