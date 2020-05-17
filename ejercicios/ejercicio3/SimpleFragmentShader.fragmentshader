@@ -1,0 +1,10 @@
+#version 330 core
+
+// fragment shader:
+uniform vec3 my_color; // A UNIFORM
+
+void main()
+{
+    gl_FragColor.rgb = my_color;
+    gl_FragColor.a = 1; // the alpha component
+}
