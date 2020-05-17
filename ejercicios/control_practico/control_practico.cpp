@@ -4,9 +4,7 @@
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <iostream>
-#include <algorithm>
 #include <math.h> 
 
 // Include GLEW
@@ -15,8 +13,6 @@
 // Include GLFW
 #include <GLFW/glfw3.h>
 GLFWwindow* window;
-
-#include <common/shader.hpp>
 
 #define PI 3.14159265
 using namespace std;
